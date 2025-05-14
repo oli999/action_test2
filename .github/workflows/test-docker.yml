@@ -1,10 +1,10 @@
 name: Docker Compose Test
 
 on:
-  workflow_run:
-    workflows: ["Docker Compose Test"]  # ← 이 이름이 중요
-    types:
-      - completed
+  push:
+    branches:
+      - master
+
 jobs:
   test:
     runs-on: ubuntu-latest
