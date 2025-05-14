@@ -6,6 +6,8 @@ npm-debug.log
 .git
 .gitignore
 .github
+.github-actions-key
+.github-actions-key.pub
 
 # OS 메타데이터
 .DS_Store
