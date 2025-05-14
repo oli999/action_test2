@@ -1,0 +1,41 @@
+name: Docker Compose Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: docker-compose --version
+
+      - name: Build and run containers
+        run: docker-compose up -d --build
+
+      - name: Wait for service to be ready
+        run: |
+          echo "⏳ Waiting for server to start..."
+          for i in {1..10}; do
+            curl -s http://localhost:8888 && break
+            sleep 2
+          done
+
+      - name: Run HTTP test
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8888)
+          if [ "$RESPONSE" != "200" ]; then
+            echo "❌ Failed: Unexpected response code $RESPONSE"
+            exit 1
+          fi
+          echo "✅ Success: Server responded with HTTP $RESPONSE"
+
+      - name: Clean up
+        run: docker-compose down
