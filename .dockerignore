@@ -1,0 +1,19 @@
+# node_modules는 어차피 Docker 안에서 npm install로 생성됨
+node_modules
+npm-debug.log
+
+# Git 관련
+.git
+.gitignore
+.github
+
+# OS 메타데이터
+.DS_Store
+Thumbs.db
+
+# 환경파일 (보안상 제외)
+.env
+
+# 빌드 산출물 (있을 경우)
+dist
+build
